@@ -1,7 +1,7 @@
 === Upload Scan ===
 Contributors: kurtpayne 
 Tags: clamav, scanner, antivirus, malware, syslog
-Requires at least: 3.3
+Requires at least: 3.2
 Tested up to: 3.3.1
 Stable tag: 1.0
 

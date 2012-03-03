@@ -101,12 +101,12 @@ class Upload_Scan_Plugin {
 	public function activate() {
 		global $wp_version;
 		
-		// Version check, only 3.3+
-		if ( ! version_compare( $wp_version, '3.3', '>=') ) {
+		// Version check, only 3.2+
+		if ( ! version_compare( $wp_version, '3.2', '>=') ) {
 			if ( function_exists('deactivate_plugins') ) {
 				deactivate_plugins( UPLOAD_SCAN_PLUGIN_DIR . '/upload-scan.php' );
 			}
-			die( '<strong>Upload Scan</strong> requires WordPress 3.3 or later' );
+			die( '<strong>Upload Scan</strong> requires WordPress 3.2 or later' );
 		}
 
 		// Check for exec or clamav
