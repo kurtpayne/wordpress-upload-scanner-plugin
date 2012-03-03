@@ -1,0 +1,34 @@
+Upload Scanner Plugin for WordPress
+--------------------------------------
+
+This plugin will scan any uploaded files (detected via $_FILES) with ClamAV.  It
+can also be configured to work with an admin-configured system command so third
+party scanners can be used.
+
+When a positive result is found, the remediation actions can be configured to
+e-mail the site admin, quarantine the file, or send a 406 status and stop
+Wordpress execution.
+
+Since the $_FILES superglobal is used, and no WordPress hooks, this should work
+for other plugins that accept file uploads, too, including front-end plugins,
+and flash-based uploader.
+
+
+How to use
+--------------------------------------
+Copy the upload-scan folder to your site's wp-content/plugins folder, then
+activate the plugin, and visit your "Upload Scan" settings page to configure it.
+
+
+It says ClamAV isn't installed?
+--------------------------------------
+You'll need to install ClamAV and php-clamav.
+
+http://php-clamav.sourceforge.net
+
+You don't actually need ClamAV to use this plugin, though.  You can use the
+system command to run another scanner that can accept input on the command line.
+
+For example, you could scan with avira like this:
+
+    avscan $UPLOAD_SCANNER_ORIG_TEMPNAME
