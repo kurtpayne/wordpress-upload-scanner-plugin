@@ -51,6 +51,9 @@ class Upload_Scan_Plugin {
 		if ( !extension_loaded( 'clamav' ) ) {
 			echo '<div class="error"><p>The <a href="http://sourceforge.net/projects/php-clamav/" target="_blank">php-clamav extension</a> was not found.</p></div>';
 		}
+		if ( !$this->is_exec_enabled() ) {
+			echo '<div class="error"><p>The <a href="http://www.php.net/manual/en/function.exec.php" target="_blank">exec</a> function is disabled.</p></div>';			
+		}
 		if ( isset( $_REQUEST['__action'] ) && 'save' == $_REQUEST['__action'] ) {
 			if ( !check_admin_referer( 'upload-scan-save-settings' ) ) {
 				wp_die( __( 'You do not have sufficient permissions to access this page.' ) );			
@@ -90,6 +93,43 @@ class Upload_Scan_Plugin {
 		}
 	}
 
+	/**
+	 * Activate
+	 * Check for exec or clamav, otherwise this plugin is useless
+	 * Check for a minimum WordPress version, too
+	 */
+	public function activate() {
+		global $wp_version;
+		
+		// Version check, only 3.3+
+		if ( ! version_compare( $wp_version, '3.3', '>=') ) {
+			if ( function_exists('deactivate_plugins') ) {
+				deactivate_plugins( UPLOAD_SCAN_PLUGIN_DIR . '/upload-scan.php' );
+			}
+			die( '<strong>Upload Scan</strong> requires WordPress 3.3 or later' );
+		}
+
+		// Check for exec or clamav
+		if ( !extension_loaded( 'clamav' ) && !$this->is_exec_enabled() ) {
+			if ( function_exists('deactivate_plugins') ) {
+				deactivate_plugins( UPLOAD_SCAN_PLUGIN_DIR . '/upload-scan.php' );
+			}
+			die( '<strong>Upload Scan</strong> requires <a href="http://php-clamav.sourceforge.net/" target="_blank">php-clamav</a> or <a href="http://www.php.net/manual/en/function.exec.php" target="_blank">exec</a>.  Please install php-clamav or enable the exec function.' );
+		}
+	}
+	
+	/**
+	 * Check to see if the exec function is available
+	 * @return bool
+	 */
+	public function is_exec_enabled() {
+		return (
+			function_exists( 'exec' ) &&
+			is_callable( 'exec' ) &&
+			!in_array( 'exec', explode( ',', @ini_get( 'disable_functions' ) ) )
+		);
+	}
+	
 	/**
 	 * Scan files according to user settings
 	 * @return void
@@ -178,7 +218,7 @@ class Upload_Scan_Plugin {
 				} else {
 					header('Status: 406 Not Acceptable');
 				}
-				exit();
+				exit('Not acceptable');
 			}
 		}
 	}

@@ -12,3 +12,4 @@ License: GPL2
 define( 'UPLOAD_SCAN_PLUGIN_DIR', dirname( realpath( __FILE__ ) ) );
 require_once( UPLOAD_SCAN_PLUGIN_DIR . '/class-upload-scan-plugin.php' );
 $upload_scan_plugin = new Upload_Scan_Plugin();
+register_activation_hook( __FILE__ , array( $upload_scan_plugin, 'activate' ) );

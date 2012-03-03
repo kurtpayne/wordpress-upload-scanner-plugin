@@ -21,7 +21,7 @@ if ( !defined( 'ABSPATH') ) {
 
 		<p>
 		<label>
-			<input type="checkbox" id="upload-scan_use_clamav" name="upload_scan_use_clamav" <?php disabled( !extension_loaded( 'clamav' )); ?> <?php checked( extension_loaded( 'clamav' ) && get_option( 'upload-scan_use_clamav' ) ); ?> />
+			<input type="checkbox" id="upload-scan_use_clamav" name="upload_scan_use_clamav" <?php disabled( !extension_loaded( 'clamav' ) ); ?> <?php checked( extension_loaded( 'clamav' ) && get_option( 'upload-scan_use_clamav' ) ); ?> />
 			Scan uploaded files with ClamAV
 		</label>
 		</p>
@@ -35,7 +35,7 @@ if ( !defined( 'ABSPATH') ) {
 
 		<p>
 		<label>
-			<input type="checkbox" id="upload-scan_use_command" name="upload_scan_use_command" <?php checked( get_option( 'upload-scan_use_command' ) ); ?> />
+			<input type="checkbox" id="upload-scan_use_command" name="upload_scan_use_command" <?php disabled( !$this->is_exec_enabled() ); ?> <?php checked( $this->is_exec_enabled() && get_option( 'upload-scan_use_command' ) ); ?> />
 			Issue a system command for every uploaded file
 		</label>
 		</p>
