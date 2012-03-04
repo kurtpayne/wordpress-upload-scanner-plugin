@@ -3,7 +3,7 @@
 Plugin Name: Upload Scan
 Plugin URI: https://github.com/kurtpayne/WordPress-Upload-Scanner-Plugin
 Description: Scan all uploaded files with Clam AV or any arbitrary command.
-Version: 1.0
+Version: 1.1
 Author: Kurt Payne
 Author URI: http://kpayne.me/
 License: GPL2

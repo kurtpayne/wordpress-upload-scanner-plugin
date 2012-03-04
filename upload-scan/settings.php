@@ -81,7 +81,21 @@ if ( !defined( 'ABSPATH') ) {
 			<em>User "<?php echo get_current_user(); ?>" must have access to write to this folder</em>
 		</p>
 
- 		<p>
+		<p>
+		<label>
+			<input type="checkbox" id="upload-scan_onfail_log_message" name="upload_scan_onfail_log_message" <?php checked( get_option( 'upload-scan_onfail_log_message' ) ); ?> />
+			Log a message
+		</label>
+		</p>
+
+		<p>
+			<strong>Log file location</strong><br />
+			<input type="text" id="upload-scan_log_file" name="upload_scan_onfail_log_file" value="<?php echo htmlentities( get_option( 'upload-scan_onfail_log_file' ) ); ?>" />
+			<br />
+			<em>User "<?php echo get_current_user(); ?>" must have access to write to this file</em>
+		</p>
+		
+		<p>
 		<label>
 			<input type="checkbox" id="upload-scan_onfail_send_406" name="upload_scan_onfail_send_406" <?php checked( get_option( 'upload-scan_onfail_send_406' ) ); ?> />
 			Send a "406 - Not Acceptable" status and stop processing the request
