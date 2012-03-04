@@ -48,33 +48,43 @@ class Upload_Scan_Plugin {
 		if ( !current_user_can( 'manage_options' ) )  {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
-		if ( !extension_loaded( 'clamav' ) ) {
-			echo '<div class="error"><p>The <a href="http://sourceforge.net/projects/php-clamav/" target="_blank">php-clamav extension</a> was not found.</p></div>';
-		}
-		if ( !$this->is_exec_enabled() ) {
-			echo '<div class="error"><p>The <a href="http://www.php.net/manual/en/function.exec.php" target="_blank">exec</a> function is disabled.</p></div>';			
-		}
-		if ( isset( $_REQUEST['__action'] ) && 'save' == $_REQUEST['__action'] ) {
-			if ( !check_admin_referer( 'upload-scan-save-settings' ) ) {
-				wp_die( __( 'You do not have sufficient permissions to access this page.' ) );			
+		
+		// Read the log file
+		if ( isset( $_REQUEST['__action'] ) && 'view-log' == $_REQUEST['__action'] ) {
+			include_once( UPLOAD_SCAN_PLUGIN_DIR . '/view-log.php' );
+
+		// Standard settings page
+		} else {
+			if ( !extension_loaded( 'clamav' ) ) {
+				echo '<div class="error"><p>The <a href="http://sourceforge.net/projects/php-clamav/" target="_blank">php-clamav extension</a> was not found.</p></div>';
 			}
-			if ( extension_loaded( 'clamav') ) {
-				update_option( 'upload-scan_use_clamav', isset( $_POST['upload_scan_use_clamav'] ) ) ;
-			}			
-			update_option( 'upload-scan_use_command', isset( $_POST['upload_scan_use_command'] ) ) ;
-			update_option( 'upload-scan_command', stripslashes( $_POST['upload_scan_command'] ) );
-			update_option( 'upload-scan_onfail_email_admin', isset( $_POST['upload_scan_onfail_email_admin'] ) ) ;
-			update_option( 'upload-scan_onfail_email', $_POST['upload_scan_onfail_email'] );
-			update_option( 'upload-scan_onfail_quarantine_file', isset( $_POST['upload_scan_onfail_quarantine_file'] ) ) ;
-			update_option( 'upload-scan_quarantine_folder', $_POST['upload_scan_quarantine_folder'] );
-			update_option( 'upload-scan_onfail_send_406', isset( $_POST['upload_scan_onfail_send_406'] ) ) ;
-			update_option( 'upload-scan_onfail_log_message', isset( $_POST['upload_scan_onfail_log_message'] ) );
-			update_option( 'upload-scan_onfail_log_file', stripslashes( strip_tags( $_POST['upload_scan_onfail_log_file'] ) ) );
+			if ( !$this->is_exec_enabled() ) {
+				echo '<div class="error"><p>The <a href="http://www.php.net/manual/en/function.exec.php" target="_blank">exec</a> function is disabled.</p></div>';			
+			}
+			
+			// Save settings
+			if ( isset( $_REQUEST['__action'] ) && 'save' == $_REQUEST['__action'] ) {
+				if ( !check_admin_referer( 'upload-scan-save-settings' ) ) {
+					wp_die( __( 'You do not have sufficient permissions to access this page.' ) );			
+				}
+				if ( extension_loaded( 'clamav') ) {
+					update_option( 'upload-scan_use_clamav', isset( $_POST['upload_scan_use_clamav'] ) ) ;
+				}			
+				update_option( 'upload-scan_use_command', isset( $_POST['upload_scan_use_command'] ) ) ;
+				update_option( 'upload-scan_command', stripslashes( $_POST['upload_scan_command'] ) );
+				update_option( 'upload-scan_onfail_email_admin', isset( $_POST['upload_scan_onfail_email_admin'] ) ) ;
+				update_option( 'upload-scan_onfail_email', $_POST['upload_scan_onfail_email'] );
+				update_option( 'upload-scan_onfail_quarantine_file', isset( $_POST['upload_scan_onfail_quarantine_file'] ) ) ;
+				update_option( 'upload-scan_quarantine_folder', $_POST['upload_scan_quarantine_folder'] );
+				update_option( 'upload-scan_onfail_send_406', isset( $_POST['upload_scan_onfail_send_406'] ) ) ;
+				update_option( 'upload-scan_onfail_log_message', isset( $_POST['upload_scan_onfail_log_message'] ) );
+				update_option( 'upload-scan_onfail_log_file', stripslashes( strip_tags( $_POST['upload_scan_onfail_log_file'] ) ) );
+			}
+			if ( get_option( 'upload-scan_onfail_log_message' ) && !$this->does_log_file_exist() ) {
+				echo '<div class="error"><p>The log file does not exist, or is not writable: ' . get_option( 'upload-scan_onfail_log_file' ) . '</p></div>';
+			}
+			include_once( UPLOAD_SCAN_PLUGIN_DIR . '/settings.php' );
 		}
-		if ( get_option( 'upload-scan_onfail_log_message' ) && !$this->does_log_file_exist() ) {
-			echo '<div class="error"><p>The log file does not exist, or is not writable: ' . get_option( 'upload-scan_onfail_log_file' ) . '</p></div>';
-		}
-		include_once( UPLOAD_SCAN_PLUGIN_DIR . '/settings.php' );
 	}
 
 	/**
@@ -155,7 +165,7 @@ class Upload_Scan_Plugin {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Scan files according to user settings
 	 * @return void
@@ -173,13 +183,19 @@ class Upload_Scan_Plugin {
 		require_once( UPLOAD_SCAN_PLUGIN_DIR . '/class-upload-scan-report-file.php' );
 		require_once( UPLOAD_SCAN_PLUGIN_DIR . '/class-upload-scan-report-printer.php' );
 		require_once( UPLOAD_SCAN_PLUGIN_DIR . '/class-upload-scan-report-printer-log.php' );
+		require_once( UPLOAD_SCAN_PLUGIN_DIR . '/class-upload-scan-report-printer-email.php' );
 		$report = new Upload_Scan_Report();
 		
-		// Clam scan
-		if ( extension_loaded( 'clamav' ) && get_option( 'upload-scan_use_clamav' ) ) {
-			foreach ( $_FILES as $k => $v ) {
-				$file = new Upload_Scan_Report_File();
-				$file->setFile( $v );
+		// Scan $_FILES
+		foreach ( $_FILES as $_file ) {
+
+			$file = new Upload_Scan_Report_File();
+			$file->setFile( $_file );
+			$report->addFile( $file );
+
+			// Clam scan
+			if ( extension_loaded( 'clamav' ) && get_option( 'upload-scan_use_clamav' ) ) {
+				$file->addMessage( 'Scanning with ClamAV' );
 				$ret = cl_scanfile( $file->tmp_name, $virusname );
 				if ( CL_VIRUS == $ret ) {
 					$pass = false;
@@ -188,23 +204,18 @@ class Upload_Scan_Plugin {
 				} else {
 					$file->addMessage( cl_pretcode( $ret ) );
 				}
-				$report->addFile( $file );
 			}
-		}
 
-		// Run any user defined commands
-		if ( get_option('upload-scan_use_command') ) {
-			foreach ( $_FILES as $k => $v ) {
-				$file = new Upload_Scan_Report_File();
-				$file->setFile( $v );
+			
+			// Run any user defined commands
+			if ( get_option('upload-scan_use_command') ) {
 				$cmd = sprintf('UPLOAD_SCANNER_ORIG_FILENAME=%s; UPLOAD_SCANNER_ORIG_TEMPNAME=%s; UPLOAD_SCANNER_ORIG_FILESIZE=%s; UPLOAD_SCANNER_ORIG_FILETYPE=%s; %s',
-					escapeshellarg( $v['name'] ),
-					escapeshellarg( $v['tmp_name'] ),
-					escapeshellarg( $v['size'] ),
-					escapeshellarg( $v['type'] ),
+					escapeshellarg( $file->name ),
+					escapeshellarg( $file->tmp_name ),
+					escapeshellarg( $file->size ),
+					escapeshellarg( $file->type ),
 					get_option( 'upload-scan_command' )
 				);
-				
 				$tmp = exec( $cmd, $output, $ret );
 				$file->addMessage( "Command: $cmd" );
 				$file->addMessage( 'Output: ' . implode( "\n", $output ) );
@@ -213,7 +224,6 @@ class Upload_Scan_Plugin {
 					$pass = false;
 					$file->fail = true;
 				}
-				$report->addFile( $file );
 			}
 		}
 
@@ -226,9 +236,9 @@ class Upload_Scan_Plugin {
 				if ( file_exists( $folder ) && is_dir( $folder ) && is_writable( $folder ) ) {
 					foreach ( $report->getFiles() as $file ) {
 						if ( $file->fail ) {
-							$dest = $folder . DIRECTORY_SEPARATOR . $_FILES[$file]['name'] . '.quarantined-' . substr( md5( uniqid() ), -8 );
-							move_uploaded_file( $_FILES[$file]['tmp_name'], $dest );
-							$file->addMessage("Quaranted to $dest");
+							$dest = $folder . DIRECTORY_SEPARATOR . $file->name . '.quarantined-' . substr( md5( uniqid() ), -8 );
+							move_uploaded_file( $file->tmp_name, $dest );
+							$file->addMessage("Quarantined to $dest");
 						}
 					}
 				}
@@ -240,17 +250,18 @@ class Upload_Scan_Plugin {
 			}
 
 			// Report printer adapter
-			$log_adapter = new Upload_Scan_Report_Printer_Log();
-			
+			$log_adapter   = new Upload_Scan_Report_Printer_Log();
+			$email_adapter = new Upload_Scan_Report_Printer_Email();
+
 			// Email admin
 			if ( get_option( 'upload-scan_onfail_email_admin' ) ) {
 				$report->addMessage( 'Emailing ' . get_option( 'upload-scan_onfail_email' ) );
-				$ret = wp_mail( get_option( 'upload-scan_onfail_email' ), 'Upload Scan Report', $report->getReport( $log_adapter ) );
+				$ret = wp_mail( get_option( 'upload-scan_onfail_email' ), '[' . get_bloginfo( 'name' ) . '] Upload Scan Report', $report->getReport( $email_adapter ) );
 			}
 
 			// Log it
 			if ( $this->does_log_file_exist() ) {
-				file_put_contents( get_option( 'upload-scan_onfail_log_file' ), $report->getReport( $log_adapter ) );
+				file_put_contents( get_option( 'upload-scan_onfail_log_file' ), $report->getReport( $log_adapter ), FILE_APPEND );
 			}
 			
 			// Send 406
@@ -260,7 +271,8 @@ class Upload_Scan_Plugin {
 				} else {
 					header('Status: 406 Not Acceptable');
 				}
-				exit('Not acceptable');
+				require_once( UPLOAD_SCAN_PLUGIN_DIR .'/406.php' );
+				exit();
 			}
 		}
 	}
