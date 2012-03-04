@@ -96,6 +96,7 @@ if ( !defined( 'ABSPATH') ) {
 		<p>
 			<strong>Log file location</strong><br />
 			<input type="text" id="upload-scan_log_file" name="upload_scan_onfail_log_file" value="<?php echo htmlentities( get_option( 'upload-scan_onfail_log_file' ) ); ?>" />
+			<a href="<?php echo add_query_arg( '__action', 'view-log' ); ?>" class="button-secondary">View log</a>
 			<br />
 			<em>User "<?php echo get_current_user(); ?>" must have access to write to this file</em>
 		</p>
@@ -108,6 +109,6 @@ if ( !defined( 'ABSPATH') ) {
 		</p>
 
 		<br />
-		<input type="submit" class="button-primary" value="<?php _e('Save'); ?>" name="us_submit1" id="us-submit1" />
+		<input type="submit" class="button-primary" value="<?php _e('Save'); ?>" name="upload_scan_submit1" id="upload-scan-submit1" />
 	</form>
 </div>
