@@ -11,3 +11,6 @@ delete_option( 'upload-scan_onfail_quarantine_file' );
 delete_option( 'upload-scan_quarantine_folder' );
 delete_option( 'upload-scan_onfail_send_406' );
 delete_option( 'upload-scan_version' );
+delete_option( 'upload-scan_onfail_email' );
+delete_option( 'upload-scan_onfail_log_message' );
+delete_option( 'upload-scan_onfail_log_file' );

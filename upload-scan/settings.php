@@ -63,8 +63,13 @@ if ( !defined( 'ABSPATH') ) {
 		<p>
 		<label>
 			<input type="checkbox" id="upload-scan_onfail_email_admin" name="upload_scan_onfail_email_admin" <?php checked( get_option( 'upload-scan_onfail_email_admin' ) ); ?> />
-			Email the site administrator (<?php bloginfo( 'admin_email' ); ?>)
+			Send an e-mail
 		</label>
+		</p>
+
+		<p>
+			<strong>Email address</strong><br />
+			<input type="text" id="upload-scan_onfail_email" name="upload_scan_onfail_email" value="<?php echo htmlentities( get_option( 'upload-scan_onfail_email' ) ); ?>" />
 		</p>
 
 		<p>

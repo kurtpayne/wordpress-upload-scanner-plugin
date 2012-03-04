@@ -64,6 +64,7 @@ class Upload_Scan_Plugin {
 			update_option( 'upload-scan_use_command', isset( $_POST['upload_scan_use_command'] ) ) ;
 			update_option( 'upload-scan_command', stripslashes( $_POST['upload_scan_command'] ) );
 			update_option( 'upload-scan_onfail_email_admin', isset( $_POST['upload_scan_onfail_email_admin'] ) ) ;
+			update_option( 'upload-scan_onfail_email', $_POST['upload_scan_onfail_email'] );
 			update_option( 'upload-scan_onfail_quarantine_file', isset( $_POST['upload_scan_onfail_quarantine_file'] ) ) ;
 			update_option( 'upload-scan_quarantine_folder', $_POST['upload_scan_quarantine_folder'] );
 			update_option( 'upload-scan_onfail_send_406', isset( $_POST['upload_scan_onfail_send_406'] ) ) ;
@@ -91,6 +92,7 @@ class Upload_Scan_Plugin {
 			update_option( 'upload-scan_use_command', false );
 			update_option( 'upload-scan_command', '' );
 			update_option( 'upload-scan_onfail_email_admin', false );
+			update_option( 'upload-scan_onfail_email', '' );
 			update_option( 'upload-scan_onfail_quarantine_file', false );
 			update_option( 'upload-scan_quarantine_folder', '' );
 			update_option( 'upload-scan_onfail_send_406', false );
@@ -242,8 +244,8 @@ class Upload_Scan_Plugin {
 			
 			// Email admin
 			if ( get_option( 'upload-scan_onfail_email_admin' ) ) {
-				$report->addMessage( 'Emailing ' . get_bloginfo( 'admin_email' ) );
-				$ret = wp_mail( get_bloginfo( 'admin_email' ), 'Upload Scan Report', $report->getReport( $log_adapter ) );
+				$report->addMessage( 'Emailing ' . get_option( 'upload-scan_onfail_email' ) );
+				$ret = wp_mail( get_option( 'upload-scan_onfail_email' ), 'Upload Scan Report', $report->getReport( $log_adapter ) );
 			}
 
 			// Log it
