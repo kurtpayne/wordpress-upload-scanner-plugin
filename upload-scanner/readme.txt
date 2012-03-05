@@ -19,6 +19,17 @@ Scan uploaded files with ClamAV or run system commands against uploaded files. Â
 
 == Installation ==
 
+Automatic installation
+
+1. Log into your WordPress admin
+2. Click __Plugins__
+3. Click __Add New__
+4. Search for __Upload Scaner__
+5. Click __Install Now__ under "Upload Scanner"
+6. Activate the plugin
+
+Manual installation:
+
 1. Download the plugin
 2. Extract the contents of the zip file
 3. Upload the contents of the zip file to the wp-content/plugins/ folder of your WordPress installation
