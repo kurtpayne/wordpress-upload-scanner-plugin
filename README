@@ -18,6 +18,11 @@ How to use
 Copy the upload-scan folder to your site's wp-content/plugins folder, then
 activate the plugin, and visit your "Upload Scan" settings page to configure it.
 
+![Options screen](http://github.com/kurtpayne/wordpress-upload-scanner-plugin/raw/master/upload-scanner/screenshot-1.png)
+
+![Log viewer](http://github.com/kurtpayne/wordpress-upload-scanner-plugin/raw/master/upload-scanner/screenshot-2.png)
+
+![Email report](http://github.com/kurtpayne/wordpress-upload-scanner-plugin/raw/master/upload-scanner/screenshot-3.png)
 
 It says ClamAV isn't installed?
 ----------------------------------------------------------------------------
