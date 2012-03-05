@@ -1,3 +1,10 @@
+<?php
+
+if ( !defined( 'ABSPATH') ) {
+    exit();
+}
+
+?>
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
 <html><head>
 <title>406 Not Acceptable</title>
