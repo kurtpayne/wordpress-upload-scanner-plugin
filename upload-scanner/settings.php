@@ -21,7 +21,7 @@ if ( !defined( 'ABSPATH') ) {
 
 		<p>
 		<label>
-			<input type="checkbox" id="upload-scanner_use_clamav" name="Upload_Scanner_use_clamav" <?php disabled( !extension_loaded( 'clamav' ) ); ?> <?php checked( extension_loaded( 'clamav' ) && get_option( 'upload-scanner_use_clamav' ) ); ?> />
+			<input type="checkbox" id="upload-scanner_use_clamav" name="upload_scanner_use_clamav" <?php disabled( !extension_loaded( 'clamav' ) ); ?> <?php checked( extension_loaded( 'clamav' ) && get_option( 'upload-scanner_use_clamav' ) ); ?> />
 			Scan uploaded files with ClamAV
 		</label>
 		</p>
@@ -35,14 +35,14 @@ if ( !defined( 'ABSPATH') ) {
 
 		<p>
 		<label>
-			<input type="checkbox" id="upload-scanner_use_command" name="Upload_Scanner_use_command" <?php disabled( !$this->is_exec_enabled() ); ?> <?php checked( $this->is_exec_enabled() && get_option( 'upload-scanner_use_command' ) ); ?> />
+			<input type="checkbox" id="upload-scanner_use_command" name="upload_scanner_use_command" <?php disabled( !$this->is_exec_enabled() ); ?> <?php checked( $this->is_exec_enabled() && get_option( 'upload-scanner_use_command' ) ); ?> />
 			Issue a system command for every uploaded file
 		</label>
 		</p>
 
 		<p>
 		Use this command:<br />
-		<textarea id="upload-scanner_command" style="width: 80%; height: 75px; font-family: monospace;" name="Upload_Scanner_command"><?php echo htmlentities( get_option( 'upload-scanner_command' ) ); ?></textarea>
+		<textarea id="upload-scanner_command" style="width: 80%; height: 75px; font-family: monospace;" name="upload_scanner_command"><?php echo htmlentities( get_option( 'upload-scanner_command' ) ); ?></textarea>
 		</p>
 		
 		<p>
@@ -62,40 +62,40 @@ if ( !defined( 'ABSPATH') ) {
 
 		<p>
 		<label>
-			<input type="checkbox" id="upload-scanner_onfail_email_admin" name="Upload_Scanner_onfail_email_admin" <?php checked( get_option( 'upload-scanner_onfail_email_admin' ) ); ?> />
+			<input type="checkbox" id="upload-scanner_onfail_email_admin" name="upload_scanner_onfail_email_admin" <?php checked( get_option( 'upload-scanner_onfail_email_admin' ) ); ?> />
 			Send an e-mail
 		</label>
 		</p>
 
 		<p>
 			<strong>Email address</strong><br />
-			<input type="text" id="upload-scanner_onfail_email" name="Upload_Scanner_onfail_email" value="<?php echo htmlentities( get_option( 'upload-scanner_onfail_email' ) ); ?>" />
+			<input type="text" id="upload-scanner_onfail_email" name="upload_scanner_onfail_email" value="<?php echo htmlentities( get_option( 'upload-scanner_onfail_email' ) ); ?>" />
 		</p>
 
 		<p>
 		<label>
-			<input type="checkbox" id="upload-scanner_onfail_quarantine_file" name="Upload_Scanner_onfail_quarantine_file" <?php checked( get_option( 'upload-scanner_onfail_quarantine_file' ) ); ?> />
+			<input type="checkbox" id="upload-scanner_onfail_quarantine_file" name="upload_scanner_onfail_quarantine_file" <?php checked( get_option( 'upload-scanner_onfail_quarantine_file' ) ); ?> />
 			Move the file to a quarantine folder
 		</label>
 		</p>
 
 		<p>
 			<strong>Quarantine location</strong><br />
-			<input type="text" id="upload-scanner_quarantine_folder" name="Upload_Scanner_quarantine_folder" value="<?php echo htmlentities( get_option( 'upload-scanner_quarantine_folder' ) ); ?>" />
+			<input type="text" id="upload-scanner_quarantine_folder" name="upload_scanner_quarantine_folder" value="<?php echo htmlentities( get_option( 'upload-scanner_quarantine_folder' ) ); ?>" />
 			<br />
 			<em>User "<?php echo get_current_user(); ?>" must have access to write to this folder</em>
 		</p>
 
 		<p>
 		<label>
-			<input type="checkbox" id="upload-scanner_onfail_log_message" name="Upload_Scanner_onfail_log_message" <?php checked( get_option( 'upload-scanner_onfail_log_message' ) ); ?> />
+			<input type="checkbox" id="upload-scanner_onfail_log_message" name="upload_scanner_onfail_log_message" <?php checked( get_option( 'upload-scanner_onfail_log_message' ) ); ?> />
 			Log a message
 		</label>
 		</p>
 
 		<p>
 			<strong>Log file location</strong><br />
-			<input type="text" id="upload-scanner_log_file" name="Upload_Scanner_onfail_log_file" value="<?php echo htmlentities( get_option( 'upload-scanner_onfail_log_file' ) ); ?>" />
+			<input type="text" id="upload-scanner_log_file" name="upload_scanner_onfail_log_file" value="<?php echo htmlentities( get_option( 'upload-scanner_onfail_log_file' ) ); ?>" />
 			<a href="<?php echo add_query_arg( '__action', 'view-log' ); ?>" class="button-secondary">View log</a>
 			<br />
 			<em>User "<?php echo get_current_user(); ?>" must have access to write to this file</em>
@@ -103,12 +103,12 @@ if ( !defined( 'ABSPATH') ) {
 		
 		<p>
 		<label>
-			<input type="checkbox" id="upload-scanner_onfail_send_406" name="Upload_Scanner_onfail_send_406" <?php checked( get_option( 'upload-scanner_onfail_send_406' ) ); ?> />
+			<input type="checkbox" id="upload-scanner_onfail_send_406" name="upload_scanner_onfail_send_406" <?php checked( get_option( 'upload-scanner_onfail_send_406' ) ); ?> />
 			Send a "406 - Not Acceptable" status and stop processing the request
 		</label>
 		</p>
 
 		<br />
-		<input type="submit" class="button-primary" value="<?php _e('Save'); ?>" name="Upload_Scanner_submit1" id="upload-scanner-submit1" />
+		<input type="submit" class="button-primary" value="<?php _e('Save'); ?>" name="upload_scanner_submit1" id="upload-scanner-submit1" />
 	</form>
 </div>
