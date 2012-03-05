@@ -1,0 +1,15 @@
+<?php
+/*
+Plugin Name: Upload Scanner
+Plugin URI: https://github.com/kurtpayne/WordPress-Upload-Scanner-Plugin
+Description: Scan all uploaded files with Clam AV or any arbitrary command.
+Version: 1.1
+Author: Kurt Payne
+Author URI: http://kpayne.me/
+License: GPL2
+*/
+
+define( 'UPLOAD_SCANNER_PLUGIN_DIR', dirname( realpath( __FILE__ ) ) );
+require_once( UPLOAD_SCANNER_PLUGIN_DIR . '/class-upload-scanner-plugin.php' );
+$upload_scanner_plugin = new Upload_Scanner_Plugin();
+register_activation_hook( __FILE__ , array( $upload_scanner_plugin, 'activate' ) );
