@@ -11,6 +11,12 @@ Scan all uploaded files with ClamAV
 
 Scan uploaded files with ClamAV or run system commands against uploaded files.  This allows you to integrate third party malware scanners.
 
+== Screenshots ==
+
+1. Options screen.
+2. Log viewer.
+3. Sample e-mail report.
+
 == Installation ==
 
 1. Download the plugin
