@@ -8,7 +8,7 @@ if ( !defined( 'ABSPATH') ) {
 <div class="wrap">
 	<div id="icon-tools" class="icon32"><br/></div>
 	<h2>Upload Scan Log</h2>
-	<textarea id="upload-scanner-view-log" name="Upload_Scanner_view_log" style="font-family: monospace; width: 90%; height: 500px; margin: 25px auto auto 25px;"><?php
+	<textarea id="upload-scanner-view-log" name="upload_scanner_view_log" style="font-family: monospace; width: 90%; height: 500px; margin: 25px auto auto 25px;"><?php
 		if ( $this->does_log_file_exist() ) {
 			$fp = fopen( get_option( 'upload-scanner_onfail_log_file' ) , 'r' );
 			while ( ( $line = fgetss( $fp ) )!== false ) {

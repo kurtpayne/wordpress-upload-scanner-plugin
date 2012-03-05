@@ -37,7 +37,7 @@ class Upload_Scanner_Plugin {
 	 * @return void
 	 */
 	public function settings_page() {
-		add_options_page( 'Upload Scan Options', 'Upload Scan', 'manage_options', 'upload-scanner-plugin', array( $this, 'plugin_options' ) );
+		add_options_page( 'Upload Scanner Options', 'Upload Scanner', 'manage_options', 'upload-scanner-plugin', array( $this, 'plugin_options' ) );
 	}
 
 	/**
@@ -184,12 +184,12 @@ class Upload_Scanner_Plugin {
 		require_once( UPLOAD_SCANNER_PLUGIN_DIR . '/class-upload-scanner-report-printer.php' );
 		require_once( UPLOAD_SCANNER_PLUGIN_DIR . '/class-upload-scanner-report-printer-log.php' );
 		require_once( UPLOAD_SCANNER_PLUGIN_DIR . '/class-upload-scanner-report-printer-email.php' );
-		$report = new upload_scanner_Report();
+		$report = new Upload_Scanner_Report();
 		
 		// Scan $_FILES
 		foreach ( $_FILES as $_file ) {
 
-			$file = new upload_scanner_Report_File();
+			$file = new Upload_Scanner_Report_File();
 			$file->setFile( $_file );
 			$report->addFile( $file );
 
@@ -250,8 +250,8 @@ class Upload_Scanner_Plugin {
 			}
 
 			// Report printer adapter
-			$log_adapter   = new upload_scanner_Report_Printer_Log();
-			$email_adapter = new upload_scanner_Report_Printer_Email();
+			$log_adapter   = new Upload_Scanner_Report_Printer_Log();
+			$email_adapter = new Upload_Scanner_Report_Printer_Email();
 
 			// Email admin
 			if ( get_option( 'upload-scanner_onfail_email_admin' ) ) {
