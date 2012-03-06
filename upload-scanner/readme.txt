@@ -15,6 +15,8 @@ This plugin __requires__ either ClamAV or another third-party scanner to be ins
 
 If you have a dedicated server, you can install [php-clamav](http://php-clamav.sourceforge.net) for performance and convenience.
 
+Banner image from [Eric Martinenz](http://www.flickr.com/photos/runlevel0/3647554681/in/photostream/)
+
 == Screenshots ==
 
 1. Options screen.
