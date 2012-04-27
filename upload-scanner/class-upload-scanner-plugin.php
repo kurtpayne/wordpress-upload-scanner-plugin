@@ -37,7 +37,12 @@ class Upload_Scanner_Plugin {
 	 * @return void
 	 */
 	public function settings_page() {
-		add_options_page( 'Upload Scanner Options', 'Upload Scanner', 'manage_options', 'upload-scanner-plugin', array( $this, 'plugin_options' ) );
+		add_options_page(
+		    __( 'Upload Scanner Options', 'upload-scanner' ),
+		    __( 'Upload Scanner', 'upload-scanner' ),
+		    __( 'Upload Scanner', 'upload-scanner' ),
+		    'manage_options', 'upload-scanner-plugin', array( $this, 'plugin_options' )
+		);
 	}
 
 	/**
@@ -56,10 +61,10 @@ class Upload_Scanner_Plugin {
 		// Standard settings page
 		} else {
 			if ( !extension_loaded( 'clamav' ) ) {
-				echo '<div class="error"><p>The <a href="http://sourceforge.net/projects/php-clamav/" target="_blank">php-clamav extension</a> was not found.</p></div>';
+				echo '<div class="error"><p>' . sprintf( __( "The <a href=\"%s\" target=\"_blank\">php-clamav extension</a> was not found.", 'upload-scanner' ), 'http://sourceforge.net/projects/php-clamav/' ) . '</p></div>';
 			}
 			if ( !$this->is_exec_enabled() ) {
-				echo '<div class="error"><p>The <a href="http://www.php.net/manual/en/function.exec.php" target="_blank">exec</a> function is disabled.</p></div>';			
+				echo '<div class="error"><p>' . sprintf( __( "The <a href=\"%s\" target=\"_blank\">exec</a> function is disabled.", 'upload-scanner' ), 'http://www.php.net/manual/en/function.exec.php' ) . '</p></div>';
 			}
 			
 			// Save settings
@@ -81,7 +86,7 @@ class Upload_Scanner_Plugin {
 				update_option( 'upload-scanner_onfail_log_file', stripslashes( strip_tags( $_POST['upload_scanner_onfail_log_file'] ) ) );
 			}
 			if ( get_option( 'upload-scanner_onfail_log_message' ) && !$this->does_log_file_exist() ) {
-				echo '<div class="error"><p>The log file does not exist, or is not writable: ' . get_option( 'upload-scanner_onfail_log_file' ) . '</p></div>';
+				echo '<div class="error"><p>' . __( 'The log file does not exist, or is not writable:', 'upload-scanner' ) . ' ' . get_option( 'upload-scanner_onfail_log_file' ) . '</p></div>';
 			}
 			include_once( UPLOAD_SCANNER_PLUGIN_DIR . '/settings.php' );
 		}
@@ -238,7 +243,7 @@ class Upload_Scanner_Plugin {
 						if ( $file->fail ) {
 							$dest = $folder . DIRECTORY_SEPARATOR . $file->name . '.quarantined-' . substr( md5( uniqid() ), -8 );
 							move_uploaded_file( $file->tmp_name, $dest );
-							$file->addMessage("Quarantined to $dest");
+							$file->addMessage( sprintf( __( "Quarantined to %s", 'upload-scanner' ), $dest ) );
 						}
 					}
 				}
@@ -246,7 +251,7 @@ class Upload_Scanner_Plugin {
 
 			// Send 406
 			if ( get_option( 'upload-scanner_onfail_send_406' ) ) {
-				$report->addMessage( 'Sending 406 and stopping execution' );
+				$report->addMessage( __( 'Sending 406 and stopping execution', 'uplaod-scanner' ) );
 			}
 
 			// Report printer adapter
@@ -255,8 +260,8 @@ class Upload_Scanner_Plugin {
 
 			// Email admin
 			if ( get_option( 'upload-scanner_onfail_email_admin' ) ) {
-				$report->addMessage( 'Emailing ' . get_option( 'upload-scanner_onfail_email' ) );
-				$ret = wp_mail( get_option( 'upload-scanner_onfail_email' ), '[' . get_bloginfo( 'name' ) . '] Upload Scan Report', $report->getReport( $email_adapter ) );
+				$report->addMessage( sprintf( __( 'Emailing %s', 'upload-scanner' ), get_option( 'upload-scanner_onfail_email' ) ) );
+				$ret = wp_mail( get_option( 'upload-scanner_onfail_email' ), sprintf( __( '[%s] Upload Scan Report', 'upload-scanner' ), get_bloginfo( 'name' ) ), $report->getReport( $email_adapter ) );
 			}
 
 			// Log it

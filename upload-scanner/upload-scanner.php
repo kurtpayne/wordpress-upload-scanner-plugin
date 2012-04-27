@@ -10,6 +10,7 @@ License: GPL2
 */
 
 define( 'UPLOAD_SCANNER_PLUGIN_DIR', dirname( realpath( __FILE__ ) ) );
+load_plugin_textdomain( 'upload-scanner', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 require_once( UPLOAD_SCANNER_PLUGIN_DIR . '/class-upload-scanner-plugin.php' );
 $upload_scanner_plugin = new Upload_Scanner_Plugin();
 register_activation_hook( __FILE__ , array( $upload_scanner_plugin, 'activate' ) );
