@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Upload Scanner package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Upload Scanner 1.1\n"
+"Project-Id-Version: Upload Scanner 1.2\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/upload-scanner\n"
-"POT-Creation-Date: 2012-04-27 16:02:23+00:00\n"
+"POT-Creation-Date: 2012-04-28 18:09:18+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16,7 +16,7 @@ msgstr ""
 msgid "Upload Scanner Options"
 msgstr ""
 
-#. #-#-#-#-#  upload-scanner.pot (Upload Scanner 1.1)  #-#-#-#-#
+#. #-#-#-#-#  upload-scanner.pot (Upload Scanner 1.2)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: class-upload-scanner-plugin.php:42 class-upload-scanner-plugin.php:43
 msgid "Upload Scanner"

@@ -2,8 +2,8 @@
 Contributors: kurtpayne 
 Tags: clamav, scanner, antivirus, malware, syslog
 Requires at least: 3.2
-Tested up to: 3.3.1
-Stable tag: 1.1
+Tested up to: 3.4
+Stable tag: 1.2
 
 Scan all uploaded files with ClamAV or your favorite malware scanner
 
@@ -43,6 +43,10 @@ Manual installation:
 
 == Changelog ==
 
+= 1.2 =
+ * Internationalized strings
+ * Marked compatibility with WordPress 3.4
+
 = 1.1 =
  * Added logging
 
@@ -80,6 +84,10 @@ The only user input that is passed to the shell command is the original file nam
 I haven't tested this with Multisite yet.  If you have input, let me know.
 
 == Upgrade Notice ==
+
+= 1.2 =
+
+Internationalization.  Testing with WordPress 3.4.
 
 = 1.1 =
 

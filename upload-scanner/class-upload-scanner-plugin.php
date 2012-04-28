@@ -39,8 +39,7 @@ class Upload_Scanner_Plugin {
 	public function settings_page() {
 		add_options_page(
 		    __( 'Upload Scanner Options', 'upload-scanner' ),
-		    __( 'Upload Scanner', 'upload-scanner' ),
-		    __( 'Upload Scanner', 'upload-scanner' ),
+		    __( 'Upload Scanner',         'upload-scanner' ),
 		    'manage_options', 'upload-scanner-plugin', array( $this, 'plugin_options' )
 		);
 	}
