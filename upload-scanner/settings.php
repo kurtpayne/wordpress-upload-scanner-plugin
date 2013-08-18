@@ -56,7 +56,7 @@ if ( !defined( 'ABSPATH') ) {
 		</p>
 		
 		<h3><?php _e( 'Remediation Actions', 'upload-scanner' ); ?></h3>
-		<p><?php _e( 'Tell the system what to do if ClamAV has detected a virus or if the shell command has returned exit status <code>0</code>.', 'upload-scanner' ); ?></p>
+		<p><?php _e( 'Tell the system what to do if ClamAV has detected a virus or if the shell command has returned exit status <code>1</code>.', 'upload-scanner' ); ?></p>
 
 		<p>
 		<label>
@@ -96,7 +96,7 @@ if ( !defined( 'ABSPATH') ) {
 			<input type="text" id="upload-scanner_log_file" name="upload_scanner_onfail_log_file" value="<?php echo esc_attr( get_site_option( 'upload-scanner_onfail_log_file' ) ); ?>" />
 			<a href="<?php echo add_query_arg( '__action', 'view-log' ); ?>" class="button-secondary"><?php _e( 'View log', 'upload-scanner' ); ?></a>
 			<br />
-			<em><?php printf( _e( 'User %s must have access to write to this file', 'upload-scanner'), get_current_user() ) ; ?></em>
+			<em><?php printf( __( 'User %s must have access to write to this file', 'upload-scanner'), get_current_user() ) ; ?></em>
 		</p>
 		
 		<p>
