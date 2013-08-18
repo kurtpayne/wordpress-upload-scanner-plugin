@@ -2,8 +2,9 @@
 Contributors: kurtpayne 
 Tags: clamav, scanner, antivirus, malware, syslog
 Requires at least: 3.2
-Tested up to: 3.4
-Stable tag: 1.2
+Tested up to: 3.6
+Stable tag: 1.3
+Network: true
 
 Scan all uploaded files with ClamAV or your favorite malware scanner
 
@@ -42,6 +43,10 @@ Manual installation:
 4. Then activate the Plugin from Plugins page.
 
 == Changelog ==
+
+= 1.3 =
+ * Multisite support. props daggerhart
+ * Marked compatibility with WordPress 3.6
 
 = 1.2 =
  * Internationalized strings

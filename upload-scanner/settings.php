@@ -20,7 +20,7 @@ if ( !defined( 'ABSPATH') ) {
 
 		<p>
 		<label>
-			<input type="checkbox" id="upload-scanner_use_clamav" name="upload_scanner_use_clamav" <?php disabled( !extension_loaded( 'clamav' ) ); ?> <?php checked( extension_loaded( 'clamav' ) && get_option( 'upload-scanner_use_clamav' ) ); ?> />
+			<input type="checkbox" id="upload-scanner_use_clamav" name="upload_scanner_use_clamav" <?php disabled( !extension_loaded( 'clamav' ) ); ?> <?php checked( extension_loaded( 'clamav' ) && get_site_option( 'upload-scanner_use_clamav' ) ); ?> />
 			<?php _e( 'Scan uploaded files with ClamAV', 'upload-scanner' ); ?>
 		</label>
 		</p>
@@ -33,14 +33,14 @@ if ( !defined( 'ABSPATH') ) {
 
 		<p>
 		<label>
-			<input type="checkbox" id="upload-scanner_use_command" name="upload_scanner_use_command" <?php disabled( !$this->is_exec_enabled() ); ?> <?php checked( $this->is_exec_enabled() && get_option( 'upload-scanner_use_command' ) ); ?> />
+			<input type="checkbox" id="upload-scanner_use_command" name="upload_scanner_use_command" <?php disabled( !$this->is_exec_enabled() ); ?> <?php checked( $this->is_exec_enabled() && get_site_option( 'upload-scanner_use_command' ) ); ?> />
 			<?php _e( 'Issue a system command for every uploaded file', 'upload-scanner' ); ?>
 		</label>
 		</p>
 
 		<p>
 		<?php _e( 'Use this command:', 'upload-scanner' ); ?><br />
-		<textarea id="upload-scanner_command" style="width: 80%; height: 75px; font-family: monospace;" name="upload_scanner_command"><?php echo htmlentities( get_option( 'upload-scanner_command' ) ); ?></textarea>
+		<textarea id="upload-scanner_command" style="width: 80%; height: 75px; font-family: monospace;" name="upload_scanner_command"><?php echo htmlentities( get_site_option( 'upload-scanner_command' ) ); ?></textarea>
 		</p>
 		
 		<p>
@@ -60,40 +60,40 @@ if ( !defined( 'ABSPATH') ) {
 
 		<p>
 		<label>
-			<input type="checkbox" id="upload-scanner_onfail_email_admin" name="upload_scanner_onfail_email_admin" <?php checked( get_option( 'upload-scanner_onfail_email_admin' ) ); ?> />
+			<input type="checkbox" id="upload-scanner_onfail_email_admin" name="upload_scanner_onfail_email_admin" <?php checked( get_site_option( 'upload-scanner_onfail_email_admin' ) ); ?> />
 			<?php _e( 'Send an e-mail', 'upload-scanner' ); ?>
 		</label>
 		</p>
 
 		<p>
 			<strong><?php _e( 'Email address' ); ?></strong><br />
-			<input type="text" id="upload-scanner_onfail_email" name="upload_scanner_onfail_email" value="<?php echo esc_attr( get_option( 'upload-scanner_onfail_email' ) ); ?>" />
+			<input type="text" id="upload-scanner_onfail_email" name="upload_scanner_onfail_email" value="<?php echo esc_attr( get_site_option( 'upload-scanner_onfail_email' ) ); ?>" />
 		</p>
 
 		<p>
 		<label>
-			<input type="checkbox" id="upload-scanner_onfail_quarantine_file" name="upload_scanner_onfail_quarantine_file" <?php checked( get_option( 'upload-scanner_onfail_quarantine_file' ) ); ?> />
+			<input type="checkbox" id="upload-scanner_onfail_quarantine_file" name="upload_scanner_onfail_quarantine_file" <?php checked( get_site_option( 'upload-scanner_onfail_quarantine_file' ) ); ?> />
 			<?php _e( 'Move the file to a quarantine folder', 'upload-scanner' ); ?>
 		</label>
 		</p>
 
 		<p>
 			<strong><?php _e( 'Quarantine location', 'upload-scanner' ); ?></strong><br />
-			<input type="text" id="upload-scanner_quarantine_folder" name="upload_scanner_quarantine_folder" value="<?php echo esc_attr( get_option( 'upload-scanner_quarantine_folder' ) ); ?>" />
+			<input type="text" id="upload-scanner_quarantine_folder" name="upload_scanner_quarantine_folder" value="<?php echo esc_attr( get_site_option( 'upload-scanner_quarantine_folder' ) ); ?>" />
 			<br />
 			<em><?php printf( __( 'User %s must have access to write to this folder', 'upload-scanner'), get_current_user() ); ?></em>
 		</p>
 
 		<p>
 		<label>
-			<input type="checkbox" id="upload-scanner_onfail_log_message" name="upload_scanner_onfail_log_message" <?php checked( get_option( 'upload-scanner_onfail_log_message' ) ); ?> />
+			<input type="checkbox" id="upload-scanner_onfail_log_message" name="upload_scanner_onfail_log_message" <?php checked( get_site_option( 'upload-scanner_onfail_log_message' ) ); ?> />
 			<?php _e( 'Log a message', 'upload-scanner' ); ?>
 		</label>
 		</p>
 
 		<p>
 			<strong><?php _e( 'Log file location', 'upload-scanner' ); ?></strong><br />
-			<input type="text" id="upload-scanner_log_file" name="upload_scanner_onfail_log_file" value="<?php echo esc_attr( get_option( 'upload-scanner_onfail_log_file' ) ); ?>" />
+			<input type="text" id="upload-scanner_log_file" name="upload_scanner_onfail_log_file" value="<?php echo esc_attr( get_site_option( 'upload-scanner_onfail_log_file' ) ); ?>" />
 			<a href="<?php echo add_query_arg( '__action', 'view-log' ); ?>" class="button-secondary"><?php _e( 'View log', 'upload-scanner' ); ?></a>
 			<br />
 			<em><?php printf( _e( 'User %s must have access to write to this file', 'upload-scanner'), get_current_user() ) ; ?></em>
@@ -101,7 +101,7 @@ if ( !defined( 'ABSPATH') ) {
 		
 		<p>
 		<label>
-			<input type="checkbox" id="upload-scanner_onfail_send_406" name="upload_scanner_onfail_send_406" <?php checked( get_option( 'upload-scanner_onfail_send_406' ) ); ?> />
+			<input type="checkbox" id="upload-scanner_onfail_send_406" name="upload_scanner_onfail_send_406" <?php checked( get_site_option( 'upload-scanner_onfail_send_406' ) ); ?> />
 			<?php _e( 'Send a "406 - Not Acceptable" status and stop processing the request', 'upload-scanner' ); ?>
 		</label>
 		</p>
