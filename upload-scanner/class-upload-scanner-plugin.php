@@ -7,7 +7,7 @@ if ( !defined( 'ABSPATH') ) {
 /**
  * Upload Scan Plugin
  * @author Kurt Payne
- * @version 1.2
+ * @version 1.3
  * @package Upload_Scanner_Plugin
  */
 class Upload_Scanner_Plugin {
@@ -114,36 +114,37 @@ class Upload_Scanner_Plugin {
 		$version = get_site_option( 'upload-scanner_version' );
 
 		// Set default options		
-		if ( empty( $version ) || version_compare( $version, '1.2' ) < 0 ) {
+		if ( empty( $version ) || version_compare( $version, '1.3' ) < 0 ) {
 		    
-		    // Migrate 1.1 options from single site to multisite
-		    update_site_option( 'upload-scanner_use_clamav', get_option( 'upload-scanner_use_clamav', false ) );
-		    update_site_option( 'upload-scanner_use_command', get_option( 'upload-scanner_use_command', false ) );
-		    update_site_option( 'upload-scanner_command', get_option( 'upload-scanner_command', '' ) );
-		    update_site_option( 'upload-scanner_onfail_email_admin', get_option( 'upload-scanner_onfail_email_admin', false ) );
-		    update_site_option( 'upload-scanner_onfail_email', get_option( 'upload-scanner_onfail_email', '' ) );
-		    update_site_option( 'upload-scanner_onfail_quarantine_file', get_option( 'upload-scanner_onfail_quarantine_file', false ) );
-		    update_site_option( 'upload-scanner_quarantine_folder', get_option( 'upload-scanner_quarantine_folder', '' ) );
-		    update_site_option( 'upload-scanner_onfail_send_406', get_option( 'upload-scanner_onfail_send_406', false ) );
-		    update_site_option( 'upload-scanner_onfail_log_message', get_option( 'upload-scanner_onfail_log_message', false ) );
-		    update_site_option( 'upload-scanner_onfail_log_file', get_option( 'upload-scanner_onfail_log_file', '' ) );
-		    update_site_option( 'upload-scanner_version', '1.2' );
-		    
-		    // Delete single site options
+			// Migrate 1.1 options from single site to multisite
 		    if ( is_multisite() ) {
-			delete_option( 'upload-scanner_use_clamav' );
-			delete_option( 'upload-scanner_use_command' );
-			delete_option( 'upload-scanner_command' );
-			delete_option( 'upload-scanner_onfail_email_admin' );
-			delete_option( 'upload-scanner_onfail_quarantine_file' );
-			delete_option( 'upload-scanner_quarantine_folder' );
-			delete_option( 'upload-scanner_onfail_send_406' );
-			delete_option( 'upload-scanner_version' );
-			delete_option( 'upload-scanner_onfail_email' );
-			delete_option( 'upload-scanner_onfail_log_message' );
-			delete_option( 'upload-scanner_onfail_log_file' );
+
+				update_site_option( 'upload-scanner_use_clamav', get_option( 'upload-scanner_use_clamav', false ) );
+				update_site_option( 'upload-scanner_use_command', get_option( 'upload-scanner_use_command', false ) );
+				update_site_option( 'upload-scanner_command', get_option( 'upload-scanner_command', '' ) );
+				update_site_option( 'upload-scanner_onfail_email_admin', get_option( 'upload-scanner_onfail_email_admin', false ) );
+				update_site_option( 'upload-scanner_onfail_email', get_option( 'upload-scanner_onfail_email', '' ) );
+				update_site_option( 'upload-scanner_onfail_quarantine_file', get_option( 'upload-scanner_onfail_quarantine_file', false ) );
+				update_site_option( 'upload-scanner_quarantine_folder', get_option( 'upload-scanner_quarantine_folder', '' ) );
+				update_site_option( 'upload-scanner_onfail_send_406', get_option( 'upload-scanner_onfail_send_406', false ) );
+				update_site_option( 'upload-scanner_onfail_log_message', get_option( 'upload-scanner_onfail_log_message', false ) );
+				update_site_option( 'upload-scanner_onfail_log_file', get_option( 'upload-scanner_onfail_log_file', '' ) );
+
+				delete_option( 'upload-scanner_use_clamav' );
+				delete_option( 'upload-scanner_use_command' );
+				delete_option( 'upload-scanner_command' );
+				delete_option( 'upload-scanner_onfail_email_admin' );
+				delete_option( 'upload-scanner_onfail_quarantine_file' );
+				delete_option( 'upload-scanner_quarantine_folder' );
+				delete_option( 'upload-scanner_onfail_send_406' );
+				delete_option( 'upload-scanner_version' );
+				delete_option( 'upload-scanner_onfail_email' );
+				delete_option( 'upload-scanner_onfail_log_message' );
+				delete_option( 'upload-scanner_onfail_log_file' );
 		    }
 		}
+
+		update_site_option( 'upload-scanner_version', '1.3' );
 	}
 
 	/**
